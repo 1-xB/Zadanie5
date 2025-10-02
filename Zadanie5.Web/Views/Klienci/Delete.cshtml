@@ -1,0 +1,22 @@
+@model Klient
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Usuń klienta";
+}
+
+<h2 class="mt-4 mb-3">Usuń klienta</h2>
+<div class="card col-md-6 mb-4">
+    <div class="card-body">
+        <h5 class="mb-3">Jesteś pewny, że chcesz usunąć tego klienta?</h5>
+        <p><strong>Imię:</strong> @Model.Name</p>
+        <p><strong>Nazwisko:</strong> @Model.Surname</p>
+        <p><strong>PESEL:</strong> @Model.Pesel</p>
+        <p><strong>Rok urodzenia:</strong> @Model.BirthYear</p>
+        <p><strong>Płeć:</strong> @(Model.Gender == 1 ? "Mężczyzna" : "Kobieta")</p>
+        <form method="post" asp-action="Delete" class="mt-3">
+            <button type="submit" class="btn btn-danger">Usuń</button>
+            <a class="btn btn-outline-secondary ms-2" asp-action="Index">Anuluj</a>
+        </form>
+    </div>
+</div>

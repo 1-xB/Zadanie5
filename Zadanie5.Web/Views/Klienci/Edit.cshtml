@@ -1,0 +1,39 @@
+@model Klient
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Edytuj klienta";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Dodaj klienta</h2>
+
+    <form asp-action="Edit" method="post" class="col-md-6">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label for="Name" class="form-label">Imię</label>
+            <input type="text" class="form-control" asp-for="Name"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Surname" class="form-label">Nazwisko</label>
+            <input type="text" class="form-control" asp-for="Surname"/>
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Pesel" class="form-label">PESEL</label>
+            <input type="text" class="form-control" asp-for="Pesel"/>
+            <span asp-validation-for="Pesel" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+        <a class="btn btn-outline-secondary ms-2" asp-action="Index">Anuluj</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

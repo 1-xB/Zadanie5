@@ -1,0 +1,24 @@
+@model Export
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Eksportuj klientów";
+}
+
+<div class="container">
+    
+    <h2>Eksport klientów</h2>
+
+    <form method="post" asp-action="Export" class="form">
+        <div class="form-group">
+            <label for="Type">Wybierz format pliku do eksportu:</label>
+            <select asp-for="Type" id="Type" name="Type" class="form-control">
+                <option value="CSV">Eksport do CSV</option>
+                <option value="XLSX">Eksport do XLSX</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Eksportuj</button>
+    </form>
+</div>
+

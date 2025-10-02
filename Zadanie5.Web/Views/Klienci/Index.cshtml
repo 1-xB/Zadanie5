@@ -1,0 +1,54 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Lista klientów";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Lista klientów</h2>
+        <div>
+            <a class="btn btn-primary me-2" asp-controller="Klienci" asp-action="Create">
+                Dodaj klienta
+            </a>
+            <a class="btn btn-primary me-2" asp-controller="Klienci" asp-action="Import">
+                Importuj klientów
+            </a>
+            <a class="btn btn-primary" asp-controller="Klienci" asp-action="Export">
+                Eksportuj klientów
+            </a>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>PESEL</th>
+                <th>Płeć</th>
+                <th>Rok urodzenia</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var klient in Model)
+            {
+                <tr>
+                    <td>@klient.Name</td>
+                    <td>@klient.Surname</td>
+                    <td>@klient.Pesel</td>
+                    <td>@(klient.Gender == 1 ? "Mężczyzna" : "Kobieta")</td>
+                    <td>@klient.BirthYear</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary me-2" asp-action="Edit" asp-route-id="@klient.Id">
+                            Edytuj
+                        </a>
+                        <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@klient.Id">
+                            Usuń
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

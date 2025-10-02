@@ -1,0 +1,56 @@
+@model Import
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Importuj klientów";
+}
+
+<div class="container">
+    <h2>Import klientów</h2>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div>@error.ErrorMessage</div>
+            }
+        </div>
+    }
+
+    <form method="post" asp-action="Upload" enctype="multipart/form-data" class="form">
+        <div class="form-group">
+            <label for="Type">Wybierz typ pliku:</label>
+            <select asp-for="Type" id="Type" name="Type" class="form-control">
+                <option value="CSV">Import z CSV</option>
+                <option value="XLSX">Import z XLSX</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <p id="file-requirements" class="text-muted">Plik .csv powinien zawierać następujące kolumny: Name, Surname, Pesel</p>
+        </div>
+
+        <div class="form-group">
+            <label for="File">Wybierz plik:</label>
+            <input asp-for="File" type="file" id="File" name="File" accept=".csv,.xlsx" class="form-control-file" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Wyślij</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('Type').addEventListener('change', function () {
+        const requirements = document.getElementById('file-requirements');
+        const fileInput = document.getElementById('File');
+
+        if (this.value === 'CSV') {
+            requirements.textContent = 'Plik .csv powinien zawierać następujące kolumny: Name, Surname, Pesel';
+            fileInput.accept = '.csv';
+        } else if (this.value === 'XLSX') {
+            requirements.textContent = 'Plik .xlsx powinien zawierać następujące kolumny: Name, Surname, Pesel';
+            fileInput.accept = '.xlsx';
+        }
+    });
+</script>
