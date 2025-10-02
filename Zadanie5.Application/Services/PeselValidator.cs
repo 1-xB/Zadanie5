@@ -1,6 +1,6 @@
-namespace Zadanie5.Helpers;
+namespace Zadanie5.Services.Services;
 
-public class PeselValidator
+public class PeselValidator : IPeselValidator
 {
     public (short birthYear, short gender) ParsePesel(string pesel)
     {
@@ -10,7 +10,7 @@ public class PeselValidator
         var year = int.Parse(pesel.Substring(0, 2));
         var month = int.Parse(pesel.Substring(2, 2));
         var genderDigit = int.Parse(pesel.Substring(9, 1));
-        
+
         short birthYear;
         if (month >= 1 && month <= 12)
             birthYear = (short)(1900 + year);
@@ -24,13 +24,12 @@ public class PeselValidator
             birthYear = (short)(1800 + year);
         else
             throw new ArgumentException("Nieprawidłowy miesiąc w PESEL");
-        
+
         if (birthYear > DateTime.Now.Year)
             throw new ArgumentException("Rok urodzenia nie może być w przyszłości");
-        
-        short gender = (short)(genderDigit % 2);
+
+        var gender = (short)(genderDigit % 2);
 
         return (birthYear, gender);
     }
-
 }

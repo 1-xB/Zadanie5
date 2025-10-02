@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Zadanie5.Models;
+using Zadanie5.Core;
+using Zadanie5.Core.Models;
 
 namespace Zadanie5.Data;
 
@@ -11,7 +12,7 @@ public partial class DatabaseContext : DbContext
     }
 
     public virtual DbSet<Klient> Klienci { get; set; }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Klient>(entity =>

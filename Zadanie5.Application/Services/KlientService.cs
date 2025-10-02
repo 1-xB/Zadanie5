@@ -1,21 +1,20 @@
-using Zadanie5.Helpers;
-using Zadanie5.Models;
-using Zadanie5.Models.Interfaces;
-
+using Zadanie5.Infrastructure.Repositories;
+using Zadanie5.Core;
+using Zadanie5.Core.Models;
 
 namespace Zadanie5.Services.Services;
 
 public class KlientService : IKlientService
 {
+    private readonly IPeselValidator _peselValidation;
     private readonly IKlientRepository _repository;
-    private readonly PeselValidator _peselValidation;
 
-    public KlientService(IKlientRepository repository, PeselValidator peselValidation)
+    public KlientService(IKlientRepository repository, IPeselValidator peselValidation)
     {
         _repository = repository;
         _peselValidation = peselValidation;
     }
-    
+
     public async Task<List<Klient>> GetAllKlientsAsync()
     {
         return await _repository.GetAllAsync();
@@ -23,10 +22,7 @@ public class KlientService : IKlientService
 
     public async Task<Klient?> GetKlientByIdAsync(int? id)
     {
-        if (id == null)
-        {
-            return null;
-        }
+        if (id == null) return null;
         return await _repository.GetByIdAsync(id.Value);
     }
 
@@ -35,7 +31,7 @@ public class KlientService : IKlientService
         var (birthYear, gender) = _peselValidation.ParsePesel(klient.Pesel);
         klient.BirthYear = birthYear;
         klient.Gender = gender;
-        
+
         await _repository.AddAsync(klient);
         await _repository.SaveChangesAsync();
     }
@@ -45,7 +41,7 @@ public class KlientService : IKlientService
         var (birthYear, gender) = _peselValidation.ParsePesel(klient.Pesel);
         klient.BirthYear = birthYear;
         klient.Gender = gender;
-        
+
         await _repository.UpdateAsync(klient);
         await _repository.SaveChangesAsync();
     }

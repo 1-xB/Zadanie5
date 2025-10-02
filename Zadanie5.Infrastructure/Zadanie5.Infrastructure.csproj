@@ -11,7 +11,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Zadanie5.Models\Zadanie5.Models.csproj" />
+      <ProjectReference Include="..\Zadanie5.Core\Zadanie5.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Interfaces\" />
     </ItemGroup>
 
 </Project>

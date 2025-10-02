@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Zadanie5.Models;
+namespace Zadanie5.Core.Models;
 
 public class Import
 {

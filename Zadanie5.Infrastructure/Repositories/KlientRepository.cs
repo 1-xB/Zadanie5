@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Zadanie5.Data;
-using Zadanie5.Models;
-using Zadanie5.Models.Interfaces;
+using Zadanie5.Core;
+using Zadanie5.Core.Models;
 
 namespace Zadanie5.Infrastructure.Repositories;
 
@@ -13,7 +13,7 @@ public class KlientRepository : IKlientRepository
     {
         _context = context;
     }
-    
+
     public async Task<List<Klient>> GetAllAsync()
     {
         return await _context.Klienci.ToListAsync();
@@ -42,10 +42,7 @@ public class KlientRepository : IKlientRepository
     public async Task DeleteAsync(int id)
     {
         var klient = await GetByIdAsync(id);
-        if (klient != null)
-        {
-            _context.Klienci.Remove(klient);
-        }
+        if (klient != null) _context.Klienci.Remove(klient);
     }
 
     public async Task SaveChangesAsync()

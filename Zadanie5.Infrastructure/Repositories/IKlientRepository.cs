@@ -1,4 +1,6 @@
-namespace Zadanie5.Models.Interfaces;
+using Zadanie5.Core.Models;
+
+namespace Zadanie5.Infrastructure.Repositories;
 
 public interface IKlientRepository
 {

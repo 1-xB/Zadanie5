@@ -8,8 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Zadanie5.Infrastructure\Zadanie5.Infrastructure.csproj" />
-      <ProjectReference Include="..\Zadanie5.Models\Zadanie5.Models.csproj" />
+        <ProjectReference Include="..\Zadanie5.Infrastructure\Zadanie5.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Zadanie5.Core\Zadanie5.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ClosedXML" Version="0.105.0"/>
+        <PackageReference Include="CsvHelper" Version="33.1.0"/>
     </ItemGroup>
 
 </Project>
