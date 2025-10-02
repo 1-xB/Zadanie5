@@ -7,16 +7,16 @@ namespace Zadanie5.Services.Services;
 
 public class FileCreatingService
 {
-    private readonly DatabaseContext _context;
 
-    public FileCreatingService(DatabaseContext databaseContext)
+    private readonly IKlientService _klientService;
+    public FileCreatingService(IKlientService klientService)
     {
-        _context = databaseContext;
+        _klientService = klientService;
     }
 
     public async Task<(byte[] fileContent, string contentType, string fileName)> ExportKlientsToCsv()
     {
-        var allKlients = await _context.Klienci.ToListAsync();
+        var allKlients = await _klientService.GetAllKlientsAsync();
         var sb = new StringBuilder();
         sb.AppendLine("Name;Surname;Pesel;BithYear;Gender");
         foreach (var klient in allKlients)
@@ -31,7 +31,7 @@ public class FileCreatingService
 
     public async Task<(byte[] content, string, string)> ExportKlientsToXlsx()
     {
-        var allKlients = await _context.Klienci.ToListAsync();
+        var allKlients = await _klientService.GetAllKlientsAsync();
 
         using (var workbook = new XLWorkbook())
         {
