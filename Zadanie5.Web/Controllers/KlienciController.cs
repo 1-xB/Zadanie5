@@ -1,51 +1,41 @@
-using System.Text;
-using ClosedXML.Excel;
-using CsvHelper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Zadanie5.Data;
-using Zadanie5.Helpers;
-using Zadanie5.Models;
+using Zadanie5.Core.Models;
 using Zadanie5.Services.Services;
 
 namespace Zadanie5.Controllers;
 
 public class KlienciController : Controller
 {
-    private readonly PeselValidator _peselValidator;
-    private readonly FileProcessingService _fileProcessingService;
     private readonly FileCreatingService _fileCreatingService;
-    private readonly IKlientService  _klientService;
-    public KlienciController(PeselValidator peselValidator, FileProcessingService fileProcessingService, FileCreatingService fileCreatingService, IKlientService klientService)
+    private readonly FileProcessingService _fileProcessingService;
+    private readonly IKlientService _klientService;
+
+    public KlienciController(FileProcessingService fileProcessingService, FileCreatingService fileCreatingService,
+        IKlientService klientService)
     {
-        _peselValidator = peselValidator;
         _fileProcessingService = fileProcessingService;
         _fileCreatingService = fileCreatingService;
         _klientService = klientService;
     }
+
     // GET
     public async Task<IActionResult> Index()
     {
         var klienci = await _klientService.GetAllKlientsAsync();
         return View(klienci);
     }
-    
+
     public IActionResult Create()
     {
         return View();
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Create(Klient klient)
     {
         if (ModelState.IsValid)
-        {
             try
             {
-                var (birthYear, gender) = _peselValidator.ParsePesel(klient.Pesel);
-                klient.BirthYear = birthYear;
-                klient.Gender = gender;
-            
                 await _klientService.CreateKlientAsync(klient);
                 return RedirectToAction("Index");
             }
@@ -53,17 +43,14 @@ public class KlienciController : Controller
             {
                 ModelState.AddModelError("Pesel", ex.Message);
             }
-        }
+
         return View(klient);
     }
 
     public async Task<IActionResult> Edit(int? id)
     {
         var klient = await _klientService.GetKlientByIdAsync(id);
-        if (klient == null)
-        {
-            return NotFound();
-        }
+        if (klient == null) return NotFound();
         return View(klient);
     }
 
@@ -71,7 +58,6 @@ public class KlienciController : Controller
     public async Task<IActionResult> Edit(int id, Klient klient)
     {
         if (ModelState.IsValid)
-        {
             try
             {
                 await _klientService.UpdateKlientAsync(klient);
@@ -81,17 +67,14 @@ public class KlienciController : Controller
             {
                 ModelState.AddModelError("Pesel", e.Message);
             }
-        }
+
         return View(klient);
     }
-    
+
     public async Task<IActionResult> Delete(int? id)
     {
         var klient = await _klientService.GetKlientByIdAsync(id);
-        if (klient == null)
-        {
-            return NotFound();
-        }
+        if (klient == null) return NotFound();
         return View(klient);
     }
 
@@ -99,15 +82,12 @@ public class KlienciController : Controller
     public async Task<IActionResult> Delete(int id)
     {
         var klient = await _klientService.GetKlientByIdAsync(id);
-        if (klient == null)
-        {
-            return NotFound();
-        }
-        
+        if (klient == null) return NotFound();
+
         await _klientService.DeleteKlientAsync(klient);
         return RedirectToAction("Index");
     }
-    
+
     public IActionResult Import()
     {
         return View();
@@ -153,10 +133,7 @@ public class KlienciController : Controller
 
         if (errors.Any())
         {
-            foreach (var error in errors)
-            {
-                ModelState.AddModelError("File", error);
-            }
+            foreach (var error in errors) ModelState.AddModelError("File", error);
             return View("Import");
         }
 
@@ -177,12 +154,14 @@ public class KlienciController : Controller
         {
             if (export.Type == "CSV")
             {
-                return await _fileCreatingService.ExportKlientsToCsv();
+                var (content, contentType, fileName) = await _fileCreatingService.ExportKlientsToCsv();
+                return File(content, contentType, fileName);
             }
 
             if (export.Type == "XLSX")
             {
-                return await _fileCreatingService.ExportKlientsToXlsx();
+                var (content, contentType, fileName) = await _fileCreatingService.ExportKlientsToXlsx();
+                return File(content, contentType, fileName);
             }
 
             ModelState.AddModelError("Type", "Nieznany typ eksportu");
@@ -193,7 +172,5 @@ public class KlienciController : Controller
             ModelState.AddModelError("Type", "Wystąpił błąd poczas tworzenia pliku do eksportu");
             return View("Export");
         }
-
     }
-    
 }

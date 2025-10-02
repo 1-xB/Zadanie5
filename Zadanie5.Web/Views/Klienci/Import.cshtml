@@ -1,4 +1,4 @@
-@model Import
+@model Zadanie5.Core.Models.Import
 
 @{
     Layout = "_Layout";
@@ -28,12 +28,13 @@
         </div>
 
         <div class="form-group">
-            <p id="file-requirements" class="text-muted">Plik .csv powinien zawierać następujące kolumny: Name, Surname, Pesel</p>
+            <p id="file-requirements" class="text-muted">Plik .csv powinien zawierać następujące kolumny: Name, Surname,
+                Pesel</p>
         </div>
 
         <div class="form-group">
             <label for="File">Wybierz plik:</label>
-            <input asp-for="File" type="file" id="File" name="File" accept=".csv,.xlsx" class="form-control-file" />
+            <input asp-for="File" type="file" id="File" name="File" accept=".csv,.xlsx" class="form-control-file"/>
         </div>
 
         <button type="submit" class="btn btn-primary">Wyślij</button>

@@ -21,34 +21,34 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Imię</th>
-                <th>Nazwisko</th>
-                <th>PESEL</th>
-                <th>Płeć</th>
-                <th>Rok urodzenia</th>
-                <th>Akcje</th>
-            </tr>
+        <tr>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>PESEL</th>
+            <th>Płeć</th>
+            <th>Rok urodzenia</th>
+            <th>Akcje</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach(var klient in Model)
-            {
-                <tr>
-                    <td>@klient.Name</td>
-                    <td>@klient.Surname</td>
-                    <td>@klient.Pesel</td>
-                    <td>@(klient.Gender == 1 ? "Mężczyzna" : "Kobieta")</td>
-                    <td>@klient.BirthYear</td>
-                    <td>
-                        <a class="btn btn-sm btn-outline-primary me-2" asp-action="Edit" asp-route-id="@klient.Id">
-                            Edytuj
-                        </a>
-                        <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@klient.Id">
-                            Usuń
-                        </a>
-                    </td>
-                </tr>
-            }
+        @foreach (var klient in Model)
+        {
+            <tr>
+                <td>@klient.Name</td>
+                <td>@klient.Surname</td>
+                <td>@klient.Pesel</td>
+                <td>@(klient.Gender == 1 ? "Mężczyzna" : "Kobieta")</td>
+                <td>@klient.BirthYear</td>
+                <td>
+                    <a class="btn btn-sm btn-outline-primary me-2" asp-action="Edit" asp-route-id="@klient.Id">
+                        Edytuj
+                    </a>
+                    <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@klient.Id">
+                        Usuń
+                    </a>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

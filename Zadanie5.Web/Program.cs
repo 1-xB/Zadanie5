@@ -1,7 +1,5 @@
 using Zadanie5.Data;
-using Zadanie5.Helpers;
 using Zadanie5.Infrastructure.Repositories;
-using Zadanie5.Models.Interfaces;
 using Zadanie5.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +9,8 @@ builder.Services.AddNpgsql<DatabaseContext>(builder.Configuration.GetConnectionS
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<PeselValidator>();
+builder.Services.AddScoped<IPeselValidator, PeselValidator>();
+
 builder.Services.AddScoped<FileProcessingService>();
 builder.Services.AddScoped<FileCreatingService>();
 
@@ -35,7 +34,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

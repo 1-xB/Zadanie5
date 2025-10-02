@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Zadanie5.Models;
+using Zadanie5.Core;
+using Zadanie5.Core.Models;
 
 namespace Zadanie5.Controllers;
 
