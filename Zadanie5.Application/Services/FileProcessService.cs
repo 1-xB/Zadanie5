@@ -8,11 +8,11 @@ using Zadanie5.Core.Models;
 
 namespace Zadanie5.Services.Services;
 
-public class FileProcessingService
+public class FileProcessService : IFileProcessService
 {
     private readonly IPeselValidator _peselValidator;
 
-    public FileProcessingService(IPeselValidator peselValidator)
+    public FileProcessService(IPeselValidator peselValidator)
     {
         _peselValidator = peselValidator;
     }

@@ -5,7 +5,7 @@ using Zadanie5.Data;
 
 namespace Zadanie5.Services.Services;
 
-public class FileCreatingService
+public class FileCreatingService : IFileCreatingService
 {
 
     private readonly IKlientService _klientService;
