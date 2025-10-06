@@ -1,4 +1,4 @@
-namespace Zadanie5.Core.Models;
+namespace Zadanie5.Domain.Entities;
 
 public class Export
 {

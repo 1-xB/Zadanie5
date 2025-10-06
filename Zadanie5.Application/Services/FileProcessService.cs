@@ -4,7 +4,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Http;
 using Zadanie5.Application.Interfaces;
-using Zadanie5.Core.Models;
+using Zadanie5.Domain.Entities;
 
 namespace Zadanie5.Application.Services;
 

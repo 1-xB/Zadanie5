@@ -1,6 +1,7 @@
 using Zadanie5.Application.Interfaces;
-using Zadanie5.Core.Interfaces;
-using Zadanie5.Core.Models;
+using Zadanie5.Domain.Entities;
+using Zadanie5.Domain.Interfaces;
+
 
 namespace Zadanie5.Application.Services;
 

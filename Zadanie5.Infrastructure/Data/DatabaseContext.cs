@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Zadanie5.Core;
-using Zadanie5.Core.Models;
+using Zadanie5.Domain.Entities;
 
-namespace Zadanie5.Data;
+namespace Zadanie5.Infrastructure.Data;
 
 public partial class DatabaseContext : DbContext
 {

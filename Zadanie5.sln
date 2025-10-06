@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zadanie5.Infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zadanie5.Application", "Zadanie5.Application\Zadanie5.Application.csproj", "{E0C355B0-60A0-4138-ADAF-801905DCE856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zadanie5.Core", "Zadanie5.Core\Zadanie5.Core.csproj", "{5EE7AC1F-414E-4B31-8D04-0EA5492A0B1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zadanie5.Domain", "Zadanie5.Domain\Zadanie5.Domain.csproj", "{5EE7AC1F-414E-4B31-8D04-0EA5492A0B1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

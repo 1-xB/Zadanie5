@@ -1,5 +1,6 @@
-using Zadanie5.Core;
-using Zadanie5.Core.Models;
+
+
+using Zadanie5.Domain.Entities;
 
 namespace Zadanie5.Application.Interfaces;
 
