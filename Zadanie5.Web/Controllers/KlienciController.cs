@@ -1,19 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
-using Zadanie5.Core.Models;
-using Zadanie5.Services.Services;
+using Zadanie5.Application.DTOs;
+using Zadanie5.Application.Interfaces;
+using Zadanie5.Application.Mappers;
+using Zadanie5.Domain.Entities;
 
-namespace Zadanie5.Controllers;
+namespace Zadanie5.Web.Controllers;
 
 public class KlienciController : Controller
 {
-    private readonly FileCreatingService _fileCreatingService;
-    private readonly FileProcessingService _fileProcessingService;
+    private readonly IFileCreatingService _fileCreatingService;
+    private readonly IFileProcessService _fileProcessService;
     private readonly IKlientService _klientService;
 
-    public KlienciController(FileProcessingService fileProcessingService, FileCreatingService fileCreatingService,
+    public KlienciController(IFileProcessService fileProcessService, IFileCreatingService fileCreatingService,
         IKlientService klientService)
     {
-        _fileProcessingService = fileProcessingService;
+        _fileProcessService = fileProcessService;
         _fileCreatingService = fileCreatingService;
         _klientService = klientService;
     }
@@ -22,7 +24,7 @@ public class KlienciController : Controller
     public async Task<IActionResult> Index()
     {
         var klienci = await _klientService.GetAllKlientsAsync();
-        return View(klienci);
+        return View(klienci.Select(x => CompleteKlientMapper.ToDto(x)).ToList());
     }
 
     public IActionResult Create()
@@ -31,7 +33,7 @@ public class KlienciController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Klient klient)
+    public async Task<IActionResult> Create(KlientDto klient)
     {
         if (ModelState.IsValid)
             try
@@ -49,18 +51,21 @@ public class KlienciController : Controller
 
     public async Task<IActionResult> Edit(int? id)
     {
+        if (id == null) return BadRequest();
         var klient = await _klientService.GetKlientByIdAsync(id);
         if (klient == null) return NotFound();
-        return View(klient);
+        return View(KlientMapper.ToDto(klient));
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(int id, Klient klient)
+    public async Task<IActionResult> Edit(int? id, KlientDto klient)
     {
+        if (id == null) return BadRequest();
+        
         if (ModelState.IsValid)
             try
             {
-                await _klientService.UpdateKlientAsync(klient);
+                await _klientService.UpdateKlientAsync(id.Value, klient);
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -73,9 +78,10 @@ public class KlienciController : Controller
 
     public async Task<IActionResult> Delete(int? id)
     {
+        if (id == null) return BadRequest();
         var klient = await _klientService.GetKlientByIdAsync(id);
         if (klient == null) return NotFound();
-        return View(klient);
+        return View(CompleteKlientMapper.ToDto(klient));
     }
 
     [HttpPost]
@@ -113,7 +119,7 @@ public class KlienciController : Controller
                 return View("Import");
             }
 
-            (klienci, errors) = await _fileProcessingService.ProcessCsvFile(import.File);
+            (klienci, errors) = await _fileProcessService.ProcessCsvFile(import.File);
         }
         else if (import.Type == "XLSX")
         {
@@ -123,7 +129,7 @@ public class KlienciController : Controller
                 return View("Import");
             }
 
-            (klienci, errors) = await _fileProcessingService.ProcessXlsxFile(import.File);
+            (klienci, errors) = await _fileProcessService.ProcessXlsxFile(import.File);
         }
         else
         {
@@ -137,10 +143,11 @@ public class KlienciController : Controller
             return View("Import");
         }
 
-        await _klientService.ImportKlientsAsync(klienci);
+        var klienciDto = klienci.Select(KlientMapper.ToDto).ToList();
+        await _klientService.ImportKlientsAsync(klienciDto);
         return RedirectToAction("Index");
     }
-    
+
 
     public IActionResult Export()
     {

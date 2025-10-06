@@ -1,3 +1,5 @@
+@model List<Zadanie5.Application.DTOs.CompleteKlientDto>
+
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Lista klientów";
@@ -31,7 +33,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var klient in Model)
+        @foreach (var klient in Model.OrderBy(x => x.Id))
         {
             <tr>
                 <td>@klient.Name</td>

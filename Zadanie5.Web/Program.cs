@@ -1,21 +1,14 @@
-using Zadanie5.Data;
-using Zadanie5.Infrastructure.Repositories;
-using Zadanie5.Services.Services;
+using Zadanie5.Application.Extensions;
+using Zadanie5.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddNpgsql<DatabaseContext>(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IPeselValidator, PeselValidator>();
+builder.Services.AddInfrastructure(builder.Configuration); // Baza danych
+builder.Services.AddApplication(); // Serwisy z application
 
-builder.Services.AddScoped<FileProcessingService>();
-builder.Services.AddScoped<FileCreatingService>();
-
-builder.Services.AddScoped<IKlientRepository, KlientRepository>();
-builder.Services.AddScoped<IKlientService, KlientService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
