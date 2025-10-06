@@ -1,4 +1,6 @@
+using Zadanie5.Application.DTOs;
 using Zadanie5.Application.Interfaces;
+using Zadanie5.Application.Mappers;
 using Zadanie5.Domain.Entities;
 using Zadanie5.Domain.Interfaces;
 
@@ -27,25 +29,21 @@ public class KlientService : IKlientService
         return await _repository.GetByIdAsync(id.Value);
     }
 
-    public async Task CreateKlientAsync(Klient klient)
+    public async Task CreateKlientAsync(KlientDto klient)
     {
-        var (birthYear, gender) = _peselValidation.ParsePesel(klient.Pesel);
-        klient.BirthYear = birthYear;
-        klient.Gender = gender;
-
-        await _repository.AddAsync(klient);
+        await _repository.AddAsync(KlientMapper.ToEntity(klient, _peselValidation));
         await _repository.SaveChangesAsync();
     }
 
-    public async Task UpdateKlientAsync(Klient klient)
+    public async Task UpdateKlientAsync(int id, KlientDto klientDto)
     {
-        var (birthYear, gender) = _peselValidation.ParsePesel(klient.Pesel);
-        klient.BirthYear = birthYear;
-        klient.Gender = gender;
-
+        var klient = KlientMapper.ToEntity(klientDto, _peselValidation);
+        klient.Id = id; 
+    
         await _repository.UpdateAsync(klient);
         await _repository.SaveChangesAsync();
     }
+
 
     public async Task DeleteKlientAsync(Klient klient)
     {
@@ -53,8 +51,9 @@ public class KlientService : IKlientService
         await _repository.SaveChangesAsync();
     }
 
-    public async Task ImportKlientsAsync(List<Klient> klients)
+    public async Task ImportKlientsAsync(List<KlientDto> klientsDto)
     {
+        var klients = klientsDto.Select(x => KlientMapper.ToEntity(x, _peselValidation)).ToList();
         await _repository.AddRangeAsync(klients);
         await _repository.SaveChangesAsync();
     }
