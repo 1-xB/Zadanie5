@@ -1,8 +1,8 @@
-using Zadanie5.Infrastructure.Repositories;
-using Zadanie5.Core;
+using Zadanie5.Application.Interfaces;
+using Zadanie5.Core.Interfaces;
 using Zadanie5.Core.Models;
 
-namespace Zadanie5.Services.Services;
+namespace Zadanie5.Application.Services;
 
 public class KlientService : IKlientService
 {

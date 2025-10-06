@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Zadanie5.Data;
-using Zadanie5.Core;
+using Zadanie5.Core.Interfaces;
 using Zadanie5.Core.Models;
 
 namespace Zadanie5.Infrastructure.Repositories;

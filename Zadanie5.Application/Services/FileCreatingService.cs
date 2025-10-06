@@ -1,9 +1,8 @@
 using System.Text;
 using ClosedXML.Excel;
-using Microsoft.EntityFrameworkCore;
-using Zadanie5.Data;
+using Zadanie5.Application.Interfaces;
 
-namespace Zadanie5.Services.Services;
+namespace Zadanie5.Application.Services;
 
 public class FileCreatingService : IFileCreatingService
 {

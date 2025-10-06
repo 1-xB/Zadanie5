@@ -3,10 +3,10 @@ using ClosedXML.Excel;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Http;
-using Zadanie5.Core;
+using Zadanie5.Application.Interfaces;
 using Zadanie5.Core.Models;
 
-namespace Zadanie5.Services.Services;
+namespace Zadanie5.Application.Services;
 
 public class FileProcessService : IFileProcessService
 {

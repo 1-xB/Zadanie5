@@ -14,8 +14,4 @@
       <ProjectReference Include="..\Zadanie5.Core\Zadanie5.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Interfaces\" />
-    </ItemGroup>
-
 </Project>

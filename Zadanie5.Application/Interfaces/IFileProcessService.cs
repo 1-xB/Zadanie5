@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Zadanie5.Core.Models;
 
-namespace Zadanie5.Services.Services;
+namespace Zadanie5.Application.Interfaces;
 
 public interface IFileProcessService
 {

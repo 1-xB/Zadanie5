@@ -1,4 +1,6 @@
-namespace Zadanie5.Services.Services;
+using Zadanie5.Application.Interfaces;
+
+namespace Zadanie5.Application.Services;
 
 public class PeselValidator : IPeselValidator
 {

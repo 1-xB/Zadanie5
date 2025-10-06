@@ -1,7 +1,7 @@
 using Zadanie5.Core;
 using Zadanie5.Core.Models;
 
-namespace Zadanie5.Services.Services;
+namespace Zadanie5.Application.Interfaces;
 
 public interface IKlientService
 {
