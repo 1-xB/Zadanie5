@@ -3,6 +3,7 @@ using ClosedXML.Excel;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Http;
+using Zadanie5.Application.DTOs;
 using Zadanie5.Application.Interfaces;
 using Zadanie5.Domain.Entities;
 
@@ -42,7 +43,7 @@ public class FileProcessService : IFileProcessService
                 return (klienci, errors);
             }
 
-            var records = csv.GetRecords<KlientImport>();
+            var records = csv.GetRecords<KlientDto>();
             var rowNumber = 2;
 
             foreach (var record in records)

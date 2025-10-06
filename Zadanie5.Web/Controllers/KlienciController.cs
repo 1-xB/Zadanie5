@@ -100,9 +100,9 @@ public class KlienciController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Upload(Import import)
+    public async Task<IActionResult> Upload(ImportDto importDto)
     {
-        if (import.File == null || import.File.Length == 0)
+        if (importDto.File == null || importDto.File.Length == 0)
         {
             ModelState.AddModelError("File", "Prosze wybrać plik.");
             return View("Import");
@@ -111,25 +111,25 @@ public class KlienciController : Controller
         List<Klient> klienci;
         List<string> errors;
 
-        if (import.Type == "CSV")
+        if (importDto.Type == "CSV")
         {
-            if (!import.File.FileName.EndsWith(".csv"))
+            if (!importDto.File.FileName.EndsWith(".csv"))
             {
                 ModelState.AddModelError("File", "Prosze wybrać plik CSV.");
                 return View("Import");
             }
 
-            (klienci, errors) = await _fileProcessService.ProcessCsvFile(import.File);
+            (klienci, errors) = await _fileProcessService.ProcessCsvFile(importDto.File);
         }
-        else if (import.Type == "XLSX")
+        else if (importDto.Type == "XLSX")
         {
-            if (!import.File.FileName.EndsWith(".xlsx"))
+            if (!importDto.File.FileName.EndsWith(".xlsx"))
             {
                 ModelState.AddModelError("File", "Prosze wybrać plik XLSX.");
                 return View("Import");
             }
 
-            (klienci, errors) = await _fileProcessService.ProcessXlsxFile(import.File);
+            (klienci, errors) = await _fileProcessService.ProcessXlsxFile(importDto.File);
         }
         else
         {
@@ -155,17 +155,17 @@ public class KlienciController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Export(Export export)
+    public async Task<IActionResult> Export(ExportDto exportDto)
     {
         try
         {
-            if (export.Type == "CSV")
+            if (exportDto.Type == "CSV")
             {
                 var (content, contentType, fileName) = await _fileCreatingService.ExportKlientsToCsv();
                 return File(content, contentType, fileName);
             }
 
-            if (export.Type == "XLSX")
+            if (exportDto.Type == "XLSX")
             {
                 var (content, contentType, fileName) = await _fileCreatingService.ExportKlientsToXlsx();
                 return File(content, contentType, fileName);

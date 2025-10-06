@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Zadanie5.Domain.Entities;
+namespace Zadanie5.Application.DTOs;
 
-public class Import
+public class ImportDto
 {
     public string Type { get; set; }
     public IFormFile? File { get; set; }
